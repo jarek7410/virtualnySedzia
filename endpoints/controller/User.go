@@ -1,9 +1,6 @@
 package controller
 
 import (
-	dto2 "afmib_server/dto"
-	model2 "afmib_server/model"
-	"afmib_server/securiry"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -13,6 +10,9 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	dto2 "virtualnySedziaServer/dto"
+	model2 "virtualnySedziaServer/model"
+	"virtualnySedziaServer/securiry"
 )
 
 // Register user

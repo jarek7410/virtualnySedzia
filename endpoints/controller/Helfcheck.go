@@ -1,9 +1,9 @@
 package controller
 
 import (
-	"afmib_server/model"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"virtualnySedziaServer/model"
 )
 
 func HalfCheck(c *gin.Context) {

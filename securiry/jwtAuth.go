@@ -7,16 +7,15 @@ import (
 )
 
 // check for valid admin token
-func JWTAuth() gin.HandlerFunc {
+func JWTadminAuth() gin.HandlerFunc {
 	return func(context *gin.Context) {
-		err := ValidateJWT(context)
-		if err != nil {
+		if err := ValidateJWT(context); err != nil {
 			context.JSON(http.StatusUnauthorized, gin.H{"error": "Authentication required"})
 			context.Abort()
 			return
 		}
-		error := ValidateAdminRoleJWT(context)
-		if error != nil {
+
+		if err := ValidateAdminRoleJWT(context); err != nil {
 			context.JSON(http.StatusUnauthorized, gin.H{"error": "Only Administrator is allowed to perform this action"})
 			context.Abort()
 			return
@@ -28,14 +27,13 @@ func JWTAuth() gin.HandlerFunc {
 // check for valid customer token
 func JWTAuthCustomer() gin.HandlerFunc {
 	return func(context *gin.Context) {
-		err := ValidateJWT(context)
-		if err != nil {
+		if err := ValidateJWT(context); err != nil {
 			context.JSON(http.StatusUnauthorized, gin.H{"error": "Authentication required"})
 			context.Abort()
 			return
 		}
-		error := ValidateCustomerRoleJWT(context)
-		if error != nil {
+
+		if err := ValidateCustomerRoleJWT(context); err != nil {
 			context.JSON(http.StatusUnauthorized, gin.H{"error": "Only pay Customers are allowed to perform this action"})
 			context.Abort()
 			return
@@ -47,14 +45,14 @@ func JWTAuthCustomer() gin.HandlerFunc {
 // check for valid Anonymous token
 func JWTAuthAnonymous() gin.HandlerFunc {
 	return func(context *gin.Context) {
-		err := ValidateJWT(context)
-		if err != nil {
+
+		if err := ValidateJWT(context); err != nil {
 			context.JSON(http.StatusUnauthorized, gin.H{"error": "Authentication required"})
 			context.Abort()
 			return
 		}
-		error := ValidateAnonymousRoleJWT(context)
-		if error != nil {
+
+		if err := ValidateAnonymousRoleJWT(context); err != nil {
 			context.JSON(http.StatusUnauthorized, gin.H{"error": "Only registered Customers are allowed to perform this action"})
 			context.Abort()
 			return

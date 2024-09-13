@@ -1,8 +1,8 @@
 package model
 
 import (
-	"afmib_server/database"
 	"gorm.io/gorm"
+	"virtualnySedziaServer/database"
 )
 
 // Role model

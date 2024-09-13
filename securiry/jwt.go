@@ -1,10 +1,10 @@
 package securiry
 
 import (
-	"afmib_server/model"
 	"errors"
 	"fmt"
 	"os"
+	"virtualnySedziaServer/model"
 
 	"strconv"
 	"strings"

@@ -38,7 +38,7 @@ func (r *Routs) AddAuthPaths() {
 func (r *Routs) ServeApplication() {
 	adminRoutes := r.r.Group("/admin")
 	{
-		adminRoutes.Use(securiry.JWTAuth())
+		adminRoutes.Use(securiry.JWTadminAuth())
 
 		adminRoutes.GET("/users", controller.GetUsers)
 		adminRoutes.GET("/user/:id", controller.GetUser)

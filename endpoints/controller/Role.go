@@ -1,11 +1,11 @@
 package controller
 
 import (
-	"afmib_server/model"
 	"errors"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
+	"virtualnySedziaServer/model"
 
 	"gorm.io/gorm"
 )
