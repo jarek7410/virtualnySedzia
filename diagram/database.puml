@@ -1,0 +1,18 @@
+@startuml
+entity Issue{
+    UserID
+    Comments
+}
+entity Comment{
+    UserID
+    IssueID
+    Comments
+    CommentID
+}
+entity User
+
+User ||--o{ Issue
+User ||--o{ Comment
+Issue ||--o{ Comment
+Comment ||--o{ Comment
+@enduml

@@ -51,17 +51,27 @@ func (r *Routs) ServeApplication() {
 		adminRoutes.PUT("/user/role/:id", controller.UpdateRole)
 	}
 
-	publicRoutes := r.r.Group("/api/view")
+	publicRoutes := r.r.Group("/api")
 	{
-		publicRoutes.GET("/users", controller.GetUsersPublic)
+
+		publicRoutes.GET("/user/:id", controller.GetUser)
+		publicRoutes.GET("/issue", controller.GetIssueQuery)
+		publicRoutes.GET("/issue/:id", controller.GetIssue)
+		publicRoutes.POST("/issue/", controller.PostIssue)
+		publicRoutes.GET("/issue/:id/comment", controller.GetIssueComments)
+		publicRoutes.GET("/comment/:id", controller.GetComment)
+		publicRoutes.POST("/comment", controller.PostComment)
+		publicRoutes.GET("user/actions/:id", controller.GerUserActions)
 	}
 
 	protectedRoutes := r.r.Group("/api")
 	{
 		protectedRoutes.Use(securiry.JWTAuthAnonymous())
 
+		protectedRoutes.DELETE("/issue/:id", controller.DeleteIssue)
+		protectedRoutes.DELETE("/comment/:id", controller.DeleteComment)
+
 		protectedRoutes.GET("/users", controller.GetUsers)
-		protectedRoutes.GET("/user/:id", controller.GetUser)
 		protectedRoutes.GET("/me", controller.GetMyUser)
 		protectedRoutes.POST("/me", controller.ChangeMyUser)
 	}

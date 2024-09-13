@@ -19,6 +19,8 @@ type User struct {
 	Password string `gorm:"size:255;not null" json:"-"`
 	PID      string `gorm:"size:20" json:"pid"`
 	Role     Role   `gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;" json:"-"`
+	Comments []Comment
+	Issues   []Issue
 }
 
 // Save user details
@@ -87,6 +89,13 @@ func GetUser(User *User, id int) (err error) {
 func (u *User) Update() (err error) {
 	err = database.Re.DB.Omit("password").Save(&u).Error
 	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (user *User) getActions() error {
+	if err := database.Re.DB.Preload().First(&user).Error; err != nil {
 		return err
 	}
 	return nil

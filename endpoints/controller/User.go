@@ -200,3 +200,16 @@ func UpdateUser(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, User)
 }
+
+func GerUserActions(ctx *gin.Context) {
+	user, err := securiry.CurrentUser(ctx)
+	if err != nil {
+		ctx.JSON(http.StatusUnauthorized, gin.H{"error": err})
+		return
+	}
+	if err := user.getActions(); err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err})
+		return
+	}
+	ctx.JSON(http.StatusOK, user)
+}

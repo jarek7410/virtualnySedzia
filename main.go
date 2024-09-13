@@ -62,6 +62,9 @@ func Migrate(r *database.Repo) error {
 	err := r.DB.AutoMigrate(
 		&model2.Role{},
 		&model2.User{},
+		&model2.Comment{},
+		&model2.Issue{},
+		&model2.Hand{},
 	)
 	if err != nil {
 		return err
