@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/joho/godotenv"
 	"log"
 	"os"
 	"virtualnySedziaServer/database"
@@ -20,14 +21,14 @@ func main() {
 
 func loadEnv() {
 	//undo comment for debug and development
-	//err := godotenv.Load(".env")
-	//if err != nil {
+	err := godotenv.Load(".env")
+	if err != nil {
 
-	log.Println("Error loading .env file")
-	shell := os.Getenv("SHELL")
-	log.Println(shell)
+		log.Println("Error loading .env file")
+		shell := os.Getenv("SHELL")
+		log.Println(shell)
 
-	//}
+	}
 	log.Println(".env file loaded successfully")
 }
 

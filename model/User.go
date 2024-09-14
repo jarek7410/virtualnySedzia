@@ -87,7 +87,14 @@ func GetUser(User *User, id int) (err error) {
 
 // Update user
 func (u *User) Update() (err error) {
-	err = database.Re.DB.Omit("password").Save(&u).Error
+	err = database.Re.DB.Omit("password").Omit("Role").Save(&u).Error
+	if err != nil {
+		return err
+	}
+	return nil
+}
+func (u *User) UpdateAsAdmin() (err error) {
+	err = database.Re.DB.Save(&u).Error
 	if err != nil {
 		return err
 	}
@@ -96,6 +103,13 @@ func (u *User) Update() (err error) {
 
 func (user *User) GetActions() error {
 	if err := database.Re.DB.Preload("Issues").Preload("Comments").First(&user).Error; err != nil {
+		return err
+	}
+	return nil
+}
+
+func (user *User) ChangePassword() error {
+	if err := database.Re.DB.Save(&user).Error; err != nil {
 		return err
 	}
 	return nil

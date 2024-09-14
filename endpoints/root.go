@@ -45,10 +45,10 @@ func (r *Routs) ServeApplication() {
 		adminRoutes.PUT("/user/:id", controller.UpdateUser)
 
 		//maybe in future?
-		adminRoutes.POST("/user/role", controller.CreateRole)
-		adminRoutes.GET("/user/roles", controller.GetRoles)
-		adminRoutes.GET("/user/role/:id", controller.GetRole)
-		adminRoutes.PUT("/user/role/:id", controller.UpdateRole)
+		//adminRoutes.POST("/user/role", controller.CreateRole)
+		//adminRoutes.GET("/user/roles", controller.GetRoles)
+		//adminRoutes.GET("/user/role/:id", controller.GetRole)
+		//adminRoutes.PUT("/user/role/:id", controller.UpdateRole)
 	}
 
 	publicRoutes := r.r.Group("/api")
@@ -71,9 +71,10 @@ func (r *Routs) ServeApplication() {
 		protectedRoutes.DELETE("/issue/:id", controller.DeleteIssue)
 		protectedRoutes.DELETE("/comment/:id", controller.DeleteComment)
 
-		protectedRoutes.GET("/users", controller.GetUsers)
+		protectedRoutes.GET("/users", controller.GetUsersPublic)
 		protectedRoutes.GET("/me", controller.GetMyUser)
 		protectedRoutes.POST("/me", controller.ChangeMyUser)
+		protectedRoutes.POST("/me/password", controller.ChangeMyUserPassword)
 	}
 
 }

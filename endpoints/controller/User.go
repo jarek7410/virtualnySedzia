@@ -99,12 +99,16 @@ func GetUsersPublic(context *gin.Context) {
 	var user []model2.User
 	err := model2.GetUsers(&user)
 	if err != nil {
-		context.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": err})
+		context.JSON(http.StatusInternalServerError, gin.H{"error": err})
 		return
 	}
-	var userPublic []string
-	for _, u := range user {
-		userPublic = append(userPublic, u.Username)
+	var userPublic []dto2.PublicUserInfo
+	users, _ := json.Marshal(user)
+	err = json.Unmarshal(users, &userPublic)
+
+	if err != nil {
+		context.JSON(501, gin.H{"error": err})
+		return
 	}
 
 	context.JSON(http.StatusOK, userPublic)
@@ -193,7 +197,7 @@ func UpdateUser(c *gin.Context) {
 	if err != nil {
 		return
 	}
-	err = User.Update()
+	err = User.UpdateAsAdmin()
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": err})
 		return
@@ -209,6 +213,26 @@ func GerUserActions(ctx *gin.Context) {
 	}
 	user := model2.User{ID: uint(id)}
 	if err := user.GetActions(); err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err})
+		return
+	}
+	ctx.JSON(http.StatusOK, user)
+}
+
+func ChangeMyUserPassword(ctx *gin.Context) {
+	user, err := securiry.CurrentUser(ctx)
+	if err != nil {
+		ctx.JSON(http.StatusUnauthorized, gin.H{"error": err})
+		return
+	}
+	changesPassword := dto2.ChangePassword{}
+	if err := ctx.ShouldBindJSON(&changesPassword); err != nil {
+		ctx.JSON(http.StatusBadRequest, err)
+		return
+	}
+	user.Password = changesPassword.NewPassword
+
+	if err := user.ChangePassword(); err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err})
 		return
 	}
