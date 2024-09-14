@@ -202,12 +202,13 @@ func UpdateUser(c *gin.Context) {
 }
 
 func GerUserActions(ctx *gin.Context) {
-	user, err := securiry.CurrentUser(ctx)
+	id, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
 		ctx.JSON(http.StatusUnauthorized, gin.H{"error": err})
 		return
 	}
-	if err := user.getActions(); err != nil {
+	user := model2.User{ID: uint(id)}
+	if err := user.GetActions(); err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err})
 		return
 	}

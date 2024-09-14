@@ -94,8 +94,8 @@ func (u *User) Update() (err error) {
 	return nil
 }
 
-func (user *User) getActions() error {
-	if err := database.Re.DB.Preload().First(&user).Error; err != nil {
+func (user *User) GetActions() error {
+	if err := database.Re.DB.Preload("Issues").Preload("Comments").First(&user).Error; err != nil {
 		return err
 	}
 	return nil

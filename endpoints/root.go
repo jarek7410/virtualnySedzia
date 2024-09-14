@@ -61,7 +61,7 @@ func (r *Routs) ServeApplication() {
 		publicRoutes.GET("/issue/:id/comment", controller.GetIssueComments)
 		publicRoutes.GET("/comment/:id", controller.GetComment)
 		publicRoutes.POST("/comment", controller.PostComment)
-		publicRoutes.GET("user/actions/:id", controller.GerUserActions)
+		publicRoutes.GET("/user/actions/:id", controller.GerUserActions)
 	}
 
 	protectedRoutes := r.r.Group("/api")
