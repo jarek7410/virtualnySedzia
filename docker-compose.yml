@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  app_points:
+    depends_on:
+      - "postgres"
+    image: virtualnysedzia
+    build: .
+    restart: no
+    env_file:
+      - docker-compose.env
+    ports:
+      - 2137:2137
+  postgres:
+    image: postgres:latest
+    restart: unless-stopped
+    env_file:
+      - docker-compose.env
+
+
